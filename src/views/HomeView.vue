@@ -21,7 +21,7 @@ initialTempApi();
     <table class="table-fixed">
       <thead>
         <tr>
-          <th class="text-emerald-600">Data</th>
+          <th>Data</th>
           <th>Temperatura 2m</th>
           <th>Temperatura Aparente</th>
         </tr>
