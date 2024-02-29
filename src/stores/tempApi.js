@@ -5,6 +5,7 @@ export default async function	tempApi({}) {
   const params = {
     "latitude": -22.4256,
     "longitude": -45.4528,
+    "timezone": "America/Sao_Paulo",
     "hourly": ["temperature_2m", "apparent_temperature"],
     "forecast_days": 14
   };

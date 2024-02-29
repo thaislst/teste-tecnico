@@ -15,15 +15,35 @@ initialTempApi();
 
 <template>
   <main>
-    <Temperature />
+    <Temperature  />
 
-    <h3>Hora</h3>
-    <div v-if="data">{{ data.hourly.time[25]}}</div>
 
-    <h3>Temperatura 2m</h3>
-    <div v-if="data">{{ data.hourly.temperature2m[25] }}</div>
-
-    <h3>Temperatura Aparente</h3>
-    <div v-if="data">{{ data.hourly.apparentTemperature[25] }}</div>
+    <table class="table-fixed">
+      <thead>
+        <tr>
+          <th class="text-emerald-600">Data</th>
+          <th>Temperatura 2m</th>
+          <th>Temperatura Aparente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ data.hourly.time[25]}}</td>
+          <td>{{ (data.hourly.temperature2m[25]).toFixed(2) }}</td>
+          <td>{{ (data.hourly.apparentTemperature[25]).toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td>{{ data.hourly.time[26]}}</td>
+          <td>{{ (data.hourly.temperature2m[26]).toFixed(2) }}</td>
+          <td>{{ (data.hourly.apparentTemperature[26]).toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td>{{ data.hourly.time[27]}}</td>
+          <td>{{ (data.hourly.temperature2m[27]).toFixed(2) }}</td>
+          <td>{{ (data.hourly.apparentTemperature[27]).toFixed(2) }}</td>
+        </tr>
+        
+      </tbody>
+    </table>
   </main>
 </template>

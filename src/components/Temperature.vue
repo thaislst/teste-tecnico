@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <h3>Previsão de Temperatura em Itajubá</h3>
+  <h3 class="text-emerald-600">Previsão de Temperatura em Itajubá</h3>
 </template>
 
 <style scoped>

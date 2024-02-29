@@ -4,6 +4,7 @@ export default async function	windAPI({}) {
   const params = {
     "latitude": -22.4256,
     "longitude": -45.4528,
+    "timezone": "America/Sao_Paulo",
     "hourly": ["wind_speed_10m", "wind_speed_80m", "wind_speed_120m", "wind_speed_180m"],
     "forecast_days": 14
   };
