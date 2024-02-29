@@ -4,19 +4,18 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
+
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+      <HelloWorld msg="Bem-vindo(a)! Escolha uma variável meteorológica para analisar:" />
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink  to="/">Temperatura</RouterLink>
+        <RouterLink  to="/wind">Vento</RouterLink>
       </nav>
     </div>
-  </header>
 
+  </header>
   <RouterView />
 </template>
 
@@ -24,11 +23,6 @@ import HelloWorld from './components/HelloWorld.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
 }
 
 nav {
@@ -39,22 +33,24 @@ nav {
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  color: var(--color-button-text);
+  background-color: var(--color-button);
+  border-radius: 8px;
+  padding: 8px 20px;
 }
 
 nav a.router-link-exact-active:hover {
-  background-color: transparent;
+  background-color: var(--color-button-hover);
+  color: var(--color-button-text);
 }
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  padding: 1rem;
+  border-left: 1px solid 
 }
 
-nav a:first-of-type {
-  border: 0;
-}
+
 
 @media (min-width: 1024px) {
   header {
@@ -63,9 +59,6 @@ nav a:first-of-type {
     padding-right: calc(var(--section-gap) / 2);
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
 
   header .wrapper {
     display: flex;
