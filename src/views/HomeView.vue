@@ -1,11 +1,15 @@
 <script setup>
-import { ref } from 'vue';
-import Temperature from '@/components/Temperature.vue';
+import { ref, onMounted } from 'vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 import tempApi from '@/stores/tempApi.js';
 import formatDate from '@/stores/formatDate.js';
 
 const data = ref(null);
 const error = ref(null); 
+
+const date = ref();
+const SelectedDate = ref(null);
 
 
 async function initialTempApi() {
@@ -16,6 +20,12 @@ async function initialTempApi() {
   }
 }
 
+// Função para lidar com a seleção de data no VueDatePicker
+const handleDateSelection = (date) => {
+  SelectedDate.value = date;
+  console.log(date)
+}
+
 initialTempApi();
 
 
@@ -23,6 +33,14 @@ initialTempApi();
 
 <template>
   <main>
+    
+    <VueDatePicker 
+      v-model="date" 
+      :range="{ partialRange: false }"  
+      @internal-model-change="handleDateSelection" 
+    />
+
+
     <table class="table-fixed" v-if="data">
       <thead>
         <tr class="border-2 bg-comerc-blue text-white">
@@ -39,13 +57,15 @@ initialTempApi();
       <tbody>
         <tr v-for="(item, index) in data.hourly.time" :key="index">
           <td class="p-4 text-center border-2">{{formatDate(item)}}</td>
-          <!-- Use v-if para verificar se os dados estão definidos -->
+          <!--  verificar se os dados estão definidos -->
           <td class="p-4 text-center border-2" v-if="data.hourly.temperature2m[index]">{{ data.hourly.temperature2m[index].toFixed(1) }}</td>
           <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
           <td class="p-4 text-center border-2" v-if="data.hourly.apparentTemperature[index]">{{ data.hourly.apparentTemperature[index].toFixed(1) }}</td>
-          <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
+          <td v-else>N/A</td> 
         </tr>  
       </tbody>
     </table>
+
+    
   </main>
 </template>

@@ -9,7 +9,7 @@ import './index.css'
   <header>
     
     <div class="wrapper">
-      <HelloWorld msg="Bem-vindo(a)! Escolha uma variável meteorológica para analisar:" />
+      <HelloWorld msg="Escolha uma variável meteorológica para analisar:" />
       <nav>
         <RouterLink  to="/">Temperatura</RouterLink>
         <RouterLink  to="/wind">Vento</RouterLink>
@@ -41,16 +41,15 @@ nav a.router-link-exact-active {
 }
 
 nav a.router-link-exact-active:hover {
-  background-color: var(--color-button-hover);
   color: var(--color-button-text);
 }
 
 nav a {
-  display: inline-block;
-  padding: 1rem;
-  border-left: 1px solid 
-}
 
+  padding: 1rem 3rem;
+  text-decoration: none;
+  transition: 0.1s;
+}
 
 
 @media (min-width: 1024px) {
