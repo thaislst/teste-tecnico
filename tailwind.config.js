@@ -2,7 +2,13 @@
 export default {
   content: ["./src/**/*.{html,js,css,vue}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'comerc-blue': '#182630',
+        'comerc-green': '#63DE09',
+
+      },
+    },
   },
   plugins: [],
 }

@@ -1,48 +1,50 @@
 <script setup>
 import { ref } from 'vue';
 import Temperature from '@/components/Temperature.vue';
-import tempApi from '@/stores/tempApi.js'
+import tempApi from '@/stores/tempApi.js';
+import formatDate from '@/stores/formatDate.js';
 
 const data = ref(null);
+const error = ref(null); 
+
 
 async function initialTempApi() {
-  data.value = await tempApi({});
+  try {
+    data.value = await tempApi({});
+  } catch (err) {
+    error.value = err.message || 'Ocorreu um erro ao obter os dados da API';
+  }
 }
 
 initialTempApi();
+
 
 </script>
 
 <template>
   <main>
-    <Temperature  />
-
-
-    <table class="table-fixed">
+    <table class="table-fixed" v-if="data">
       <thead>
-        <tr>
-          <th class="text-emerald-600">Data</th>
-          <th>Temperatura 2m</th>
-          <th>Temperatura Aparente</th>
+        <tr class="border-2 bg-comerc-blue text-white">
+          <th class="p-6 font-bold ">Data/Hora</th>
+          <th class="p-6 font-bold">Temperatura 2m</th>
+          <th class="p-6 font-bold">Temperatura Aparente</th>
+        </tr>
+        <tr class="border-2 bg-comerc-blue text-white">
+          <th class=" font-semibold border-2"> Dia/Mês Hora </th>
+          <th class="font-semibold border-2">°C</th>
+          <th class=" font-semibold border-2">°C</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{{ data.hourly.time[25]}}</td>
-          <td>{{ (data.hourly.temperature2m[25]).toFixed(2) }}</td>
-          <td>{{ (data.hourly.apparentTemperature[25]).toFixed(2) }}</td>
-        </tr>
-        <tr>
-          <td>{{ data.hourly.time[26]}}</td>
-          <td>{{ (data.hourly.temperature2m[26]).toFixed(2) }}</td>
-          <td>{{ (data.hourly.apparentTemperature[26]).toFixed(2) }}</td>
-        </tr>
-        <tr>
-          <td>{{ data.hourly.time[27]}}</td>
-          <td>{{ (data.hourly.temperature2m[27]).toFixed(2) }}</td>
-          <td>{{ (data.hourly.apparentTemperature[27]).toFixed(2) }}</td>
-        </tr>
-        
+        <tr v-for="(item, index) in data.hourly.time" :key="index">
+          <td class="p-4 text-center border-2">{{formatDate(item)}}</td>
+          <!-- Use v-if para verificar se os dados estão definidos -->
+          <td class="p-4 text-center border-2" v-if="data.hourly.temperature2m[index]">{{ data.hourly.temperature2m[index].toFixed(1) }}</td>
+          <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
+          <td class="p-4 text-center border-2" v-if="data.hourly.apparentTemperature[index]">{{ data.hourly.apparentTemperature[index].toFixed(1) }}</td>
+          <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
+        </tr>  
       </tbody>
     </table>
   </main>
