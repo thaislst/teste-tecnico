@@ -89,25 +89,32 @@ watch(data, () => {
     <table class="table-fixed" v-if="data">
       <thead>
         <tr class="border-2 bg-comerc-blue text-white">
-          <th class="p-4 font-bold ">Data/Hora</th>
+          <th class="p-6 font-bold text-center ">Data/Hora</th>
           <th class="p-4 font-bold">Vento 10m</th>
           <th class="p-4 font-bold">Vento 80m</th>
           <th class="p-4 font-bold">Vento 120m</th>
           <th class="p-4 font-bold">Vento 180m</th>
         </tr>
+        <tr class="border-2 bg-comerc-blue text-white">
+          <th class="font-semibold border-2 text-center p-1"> Dia/Mês Hora </th>
+          <th class="font-semibold "></th>
+          <th class=" font-semibold text-right ">K/h</th>
+          <th class="font-semibold "></th>
+          <th class=" font-semibold "></th>
+        </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in filteredData" :key="index">
-          <td class="p-2 text-center">{{formatDate(item)}}</td>
+          <td class="p-2 text-center border-2">{{formatDate(item)}}</td>
           <!-- Use v-if para verificar se os dados estão definidos -->
-          <td class="p-2 text-center" v-if="data.hourly.windSpeed10m[index]">{{ data.hourly.windSpeed10m[index].toFixed(1) }}</td>
+          <td class="p-2 text-center border-2" v-if="data.hourly.windSpeed10m[index]">{{ data.hourly.windSpeed10m[index].toFixed(1) }}</td>
           <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
-          <td class="p-2 text-center" v-if="data.hourly.windSpeed80m[index]">{{ data.hourly.windSpeed80m[index].toFixed(1) }}</td>
+          <td class="p-2 text-center border-2" v-if="data.hourly.windSpeed80m[index]">{{ data.hourly.windSpeed80m[index].toFixed(1) }}</td>
           <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
            <!-- Use v-if para verificar se os dados estão definidos -->
-           <td class="p-2 text-center" v-if="data.hourly.windSpeed120m[index]">{{ data.hourly.windSpeed120m[index].toFixed(1) }}</td>
+           <td class="p-2 text-center border-2" v-if="data.hourly.windSpeed120m[index]">{{ data.hourly.windSpeed120m[index].toFixed(1) }}</td>
           <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
-          <td class="p-2 text-center" v-if="data.hourly.windSpeed180m[index]">{{ data.hourly.windSpeed180m[index].toFixed(1) }}</td>
+          <td class="p-2 text-center border-2" v-if="data.hourly.windSpeed180m[index]">{{ data.hourly.windSpeed180m[index].toFixed(1) }}</td>
           <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
         </tr>
         
