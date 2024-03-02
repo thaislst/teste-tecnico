@@ -1,9 +1,70 @@
 <script setup>
-import { ref, onMounted , watch} from 'vue';
+import { ref, onMounted , watch, provide} from 'vue';
+
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+
 import tempApi from '@/stores/tempApi.js';
 import formatDate from '@/stores/formatDate.js';
+
+import { use } from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { PieChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+} from 'echarts/components';
+import VChart, { THEME_KEY } from 'vue-echarts';
+
+use([
+  CanvasRenderer,
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+]);
+
+provide(THEME_KEY, 'dark');
+
+const option = ref({
+  title: {
+    text: 'Traffic Sources',
+    left: 'center',
+  },
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b} : {c} ({d}%)',
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left',
+    data: ['Direct', 'Email', 'Ad Networks', 'Video Ads', 'Search Engines'],
+  },
+  series: [
+    {
+      name: 'Traffic Sources',
+      type: 'pie',
+      radius: '55%',
+      center: ['50%', '60%'],
+      data: [
+        { value: 335, name: 'Direct' },
+        { value: 310, name: 'Email' },
+        { value: 234, name: 'Ad Networks' },
+        { value: 135, name: 'Video Ads' },
+        { value: 1548, name: 'Search Engines' },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        },
+      },
+    },
+  ],
+});
+
 
 // Configuração que ativará automaticamente o range picker
 
@@ -72,12 +133,13 @@ watch(data, () => {
 
 initialTempApi();
 
+
 </script>
 
 <template>
   <main>
     <div class="wind">
-    <h1 class="title">Temperatura</h1>
+    <h1 class="mt-10 mb-5 font-bold text-lg">Selecione uma período (máximo 14 dias):</h1>
     
     <VueDatePicker 
       v-model="date" 
@@ -86,7 +148,12 @@ initialTempApi();
       auto-apply 
     />
 
-    <table class="table-fixed" v-if="data">
+    <h1 class="mt-10 mb-10 font-bold text-lg">Gráfico de Temperatura</h1>
+    <v-chart class="chart" :option="option" autoresize />
+
+    <h1 class="mt-10 mb-10 font-bold text-lg">Tabela</h1>
+
+    <table class="table-fixed ml-auto mr-auto" v-if="data">
       <thead>
         <tr class="border-2 bg-comerc-blue text-white">
           <th class="p-6 font-bold ">Data/Hora</th>
@@ -118,3 +185,9 @@ initialTempApi();
   </div>  
   </main>
 </template>
+
+<style scoped>
+.chart {
+  height: 100vh;
+}
+</style>

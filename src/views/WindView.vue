@@ -5,6 +5,7 @@
   import windAPI from '@/stores/windAPI'
   import formatDate from '@/stores/formatDate.js';
 
+
   // Configuração que ativará automaticamente o range picker
 
   const rangeConfig = {
