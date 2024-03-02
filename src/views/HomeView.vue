@@ -9,13 +9,32 @@ const data = ref(null);
 const error = ref(null); 
 
 const date = ref();
-const SelectedDate = ref(null);
+// const selectedDate = ref(null);
 
+// Define um valor inicial para date ao montar o componente
 onMounted(() => {
   const startDate = new Date();
   const endDate = new Date(new Date().setDate(startDate.getDate() + 13));
   date.value = [startDate, endDate];
 })
+
+// // Função para lidar com a seleção de data no VueDatePicker
+// async function  handleDateSelection(date) {
+//   try {
+//     if (Array.isArray(date) && date.length === 2 ) {
+//       // Verifica se a data é um array de tamanho 2
+//       console.log(`date[0] - ${date[0]}`);
+//       console.log(`date[1] - ${date[1]}`);
+//       console.log(`selectedDate - ${date}`);
+//       selectedDate = date.value
+     
+//     } else {
+//       console.log("Seleção inválida - a data deve ser um array de tamanho 2.");
+//     }
+//   } catch (err) {
+//     error.value = err.message || 'Ocorreu um erro ao obter os dados';
+//   }
+// }
 
 
 async function initialTempApi() {
@@ -26,32 +45,20 @@ async function initialTempApi() {
   }
 }
 
-// Função para lidar com a seleção de data no VueDatePicker
-async function  handleDateSelection(date) {
-  try {
-    SelectedDate.value = date;
-  } catch (err) {
-    error.value = err.message || 'Ocorreu um erro ao obter os dados da API';
-  }
-}
+// Filtra os dados para exibir apenas os valores correspondentes ao selectedDate
+// const filteredData = ref([]);
 
-watch(data, () => {
-  if (data.value) {
-    filteredData.value = (data.value.hourly.time).filter(item => {
-      // Converta os valores de tempo para a mesma data do SelectedDate
-      const itemDate = new Date(item);
-      return itemDate.getDate() >= (SelectedDate.value[0]).getDate() && itemDate.getDate() <= (SelectedDate.value[1]).getDate();
-    });
-  }
-});
+// watch(data, () => {
+//   if (data.value) {
+//     filteredData.value = (data.value.hourly.time).filter(item => {
+//       // Converte os valores de data para a mesma data do selectedDate
+//       const itemDate = new Date(item);
+//       return itemDate.getDate() >= (selectedDate.value[0]).getDate() && itemDate.getDate() <= (selectedDate.value[1]).getDate();
+//     });
+//   }
+// });
 
 initialTempApi();
-
-// Filtrar os dados para exibir apenas os valores correspondentes ao SelectedDate
-const filteredData = ref([]);
-
-
-
 
 </script>
 
@@ -61,7 +68,6 @@ const filteredData = ref([]);
     <VueDatePicker 
       v-model="date" 
       :range="{ partialRange: false }"  
-      @internal-model-change="handleDateSelection" 
     />
 
     <table class="table-fixed" v-if="data">
@@ -78,7 +84,7 @@ const filteredData = ref([]);
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in filteredData" :key="index">
+        <tr v-for="(item, index) in data.hourly.time" :key="index">
 
           <td class="p-4 text-center border-2">{{formatDate(item)}}</td>
 
