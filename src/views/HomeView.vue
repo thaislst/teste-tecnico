@@ -76,6 +76,8 @@ initialTempApi();
 
 <template>
   <main>
+    <div class="wind">
+    <h1 class="title">Temperatura</h1>
     
     <VueDatePicker 
       v-model="date" 
@@ -113,6 +115,6 @@ initialTempApi();
       </tbody>
     </table>
 
-    
+  </div>  
   </main>
 </template>
