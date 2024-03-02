@@ -76,7 +76,7 @@ watch(data, () => {
 <template>
   <main>
     <div class="wind">
-    <h1 class="title">Vento</h1>
+    <h1 class="mt-10 mb-5 font-bold text-lg">Selecione uma período (máximo 14 dias):</h1>
 
     <VueDatePicker 
       v-model="date" 
@@ -85,7 +85,7 @@ watch(data, () => {
       auto-apply 
     />
 
-
+    <h1 class="mt-10 mb-10 font-bold text-lg">Vento em Diferentes Níveis - Itajubá, MG</h1>
     <table class="table-fixed" v-if="data">
       <thead>
         <tr class="border-2 bg-comerc-blue text-white">
