@@ -19,13 +19,12 @@
     maxRange: undefined, 
     minRange: undefined, 
     autoRange: undefined 
-};
+  };
 
-const data = ref(null);
-const error = ref(null); 
-
-const date = ref();
-const selectedDate = ref(null);
+  const data = ref(null);
+  const error = ref(null); 
+  const date = ref();
+  const selectedDate = ref(null);
 
   async function initialWindAPI() {
     try {
@@ -36,46 +35,44 @@ const selectedDate = ref(null);
   }
 
   // Define um valor inicial para date ao montar o componente
-onMounted(() => {
-  const startDate = new Date();
-  const endDate = new Date(new Date().setDate(startDate.getDate() + 13));
-  date.value = [startDate, endDate];
-  console.log(date.value)
-})
+  onMounted(() => {
+    const startDate = new Date();
+    const endDate = new Date(new Date().setDate(startDate.getDate() + 13));
+    date.value = [startDate, endDate];
+    console.log(date.value)
+  })
 
-// Função para lidar com a seleção de data no VueDatePicker
-async function  handleDateSelection(date) {
-  try {   
-    selectedDate.value = date
-    initialWindAPI();
-    console.log(selectedDate.value)
-  } catch (err) {
-    error.value = err.message || 'Ocorreu um erro ao obter os dados';
+  // Função para lidar com a seleção de data no VueDatePicker
+  async function  handleDateSelection(date) {
+    try {   
+      selectedDate.value = date
+      initialWindAPI();
+      console.log(selectedDate.value)
+    } catch (err) {
+      error.value = err.message || 'Ocorreu um erro ao obter os dados';
+    }
   }
-}
 
-// Filtra os dados para exibir apenas os valores correspondentes ao selectedDate
-const filteredData = ref([]);
+  // Filtra os dados para exibir apenas os valores correspondentes ao selectedDate
+  const filteredData = ref([]);
 
-watch(data, () => {
-  if (data.value && selectedDate.value) {
-    filteredData.value = (data.value.hourly.time).filter(item => {
-      // Converte os valores de data para a mesma data do selectedDate
-      const itemDate = new Date(item);
-      const startDate = new Date(selectedDate.value[0]);
-      const endDate = new Date(selectedDate.value[1]);
-      return itemDate >= startDate && itemDate <= endDate;
-    });
-  }
-});
+  watch(data, () => {
+    if (data.value && selectedDate.value) {
+      filteredData.value = (data.value.hourly.time).filter(item => {
+        // Converte os valores de data para a mesma data do selectedDate
+        const itemDate = new Date(item);
+        const startDate = new Date(selectedDate.value[0]);
+        const endDate = new Date(selectedDate.value[1]);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+    }
+  });
 
   initialWindAPI()
 </script>
 
-
 <template>
-  <main>
-    <div class="wind">
+  <main class="media">
     <h1 class="mt-10 mb-5 font-bold text-lg">Selecione uma período (máximo 14 dias):</h1>
 
     <VueDatePicker 
@@ -121,30 +118,16 @@ watch(data, () => {
       </tbody>
     </table>
 
-    <!-- <h3>Hora</h3>
-    <div v-if="data">{{ data.hourly.time[25]}}</div>
-
-    <h3>Vento 10m</h3>
-    <div v-if="data">{{ data.hourly.windSpeed10m[25]}}</div>
-
-    <h3>Vento 180m</h3>
-    <div v-if="data">{{ data.hourly.windSpeed180m[25]}}</div> -->
-  </div>
-
   </main>
-  
 </template>
 
 <style>
-
-.title {
-  margin-bottom: 10px;
-}
 @media (min-width: 1024px) {
-  .wind {
+  .media {
     min-height: 100vh;
     display: block;    
     align-items: center;
+    margin: auto;
   }
 }
 </style>

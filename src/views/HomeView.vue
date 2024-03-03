@@ -24,10 +24,8 @@ const rangeConfig = {
 
 const data = ref(null);
 const error = ref(null); 
-
 const date = ref();
 const selectedDate = ref(null);
-
 
 async function initialTempApi() {
   try {
@@ -42,20 +40,17 @@ onMounted(() => {
   const startDate = new Date();
   const endDate = new Date(new Date().setDate(startDate.getDate() + 13));
   date.value = [startDate, endDate];
-  console.log(date.value)
 })
 
-// Função para lidar com a seleção de data no VueDatePicker
+// Lida com a seleção de data no VueDatePicker
 async function  handleDateSelection(date) {
   try {   
     selectedDate.value = date
     initialTempApi();
-    console.log(selectedDate.value)
   } catch (err) {
     error.value = err.message || 'Ocorreu um erro ao obter os dados';
   }
 }
-
 
 // Filtra os dados para exibir apenas os valores correspondentes ao selectedDate
 const filteredData = ref([]);
@@ -77,8 +72,7 @@ initialTempApi();
 </script>
 
 <template>
-  <main>
-    <div class="wind">
+  <main class="media">
     <h1 class="mt-10 mb-5 font-bold text-lg">Selecione uma período (máximo 14 dias):</h1>
     
     <VueDatePicker 
@@ -87,8 +81,6 @@ initialTempApi();
       @internal-model-change="handleDateSelection"
       auto-apply 
     />
-
-
 
     <h1 class="mt-10 mb-10 font-bold text-lg">Temperatura do Ar - Itajubá, MG</h1>
 
@@ -100,34 +92,33 @@ initialTempApi();
           <th class="p-6 font-bold">Temperatura Aparente</th>
         </tr>
         <tr class="border-2 bg-comerc-blue text-white">
-          <th class=" font-semibold border-2"> Dia/Mês Hora </th>
+          <th class="font-semibold border-2"> Dia/Mês Hora </th>
           <th class="font-semibold border-2">°C</th>
-          <th class=" font-semibold border-2">°C</th>
+          <th class="font-semibold border-2">°C</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in filteredData" :key="index">
-
           <td class="p-4 text-center border-2">{{formatDate(item)}}</td>
-
           <!--  verificar se os dados estão definidos -->
           <td class="p-4 text-center border-2" v-if="data.hourly.temperature2m[index]">{{ data.hourly.temperature2m[index].toFixed(1) }}</td>
           <td v-else>N/A</td> <!-- Se não estiver definido, exiba N/A -->
-
           <td class="p-4 text-center border-2" v-if="data.hourly.apparentTemperature[index]">{{ data.hourly.apparentTemperature[index].toFixed(1) }}</td>
           <td v-else>N/A</td> 
-
         </tr>  
       </tbody>
-    </table>
-
-    
-  </div>  
+    </table>   
   </main>
 </template>
 
-<style scoped>
-.chart {
-  height: 100vh;
+<style>
+@media (min-width: 1024px) {
+  .media {
+    min-height: 100vh;
+    display: block;    
+    align-items: center;
+    margin: auto;
+  }
 }
-</style>
+</style>=
+

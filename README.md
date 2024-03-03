@@ -21,4 +21,4 @@ To get the frontend running locally:
 This App is a simple Dashboard with forecast air temperature and wind data at different levels for the city of Itajubá, MG.
 
 ## Known issues
-
+It remained to implement the charts of the two variables and make the table mobile-responsive.
